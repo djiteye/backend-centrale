@@ -1,7 +1,7 @@
 package com.devback.uc.Entity;
 
-import java.util.Date;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -23,13 +23,16 @@ public class ChambreA1 {
 	private String nom;
 	private String prenom;
 	private String nationalite;
-	private Date date_de_reserv;
-	private Date date_entre;
-	private Date date_sortie;
+	private String passeport;
+	private LocalDate date_de_reserv;
+	private LocalDateTime date_arrive;
+	private LocalDate date_entre;
+	private LocalDate date_sortie;
+	private boolean valider;
 	
 	
 
-	public ChambreA1(int id,String appartement,String place,String genre, String name,String nom,String prenom,String nationalite,Date date_de_reserv,Date date_entre,Date date_sortie) {
+	public ChambreA1(int id,String appartement,String place,String genre, String name,String nom,String prenom,String nationalite,String passeport,LocalDate date_de_reserv,LocalDateTime date_arrive,LocalDate date_entre,LocalDate date_sortie,boolean valider) {
 		super();
 		this.id=id;
 		this.appartement=appartement;
@@ -39,9 +42,12 @@ public class ChambreA1 {
 		this.nom=nom;
 		this.prenom=prenom;
 		this.nationalite=nationalite;
+		this.passeport=passeport;
 		this.date_de_reserv=date_de_reserv;
+		this.date_arrive=date_arrive;
 		this.date_entre=date_entre;
 		this.date_sortie=date_sortie;
+		this.valider=valider;
 		
 	}
 
@@ -143,38 +149,74 @@ public class ChambreA1 {
 
 
 
-	public Date getDate_de_reserv() {
+	public LocalDate getDate_de_reserv() {
 		return date_de_reserv;
 	}
 
 
 
-	public void setDate_de_reserv(Date date_de_reserv) {
+	public void setDate_de_reserv(LocalDate date_de_reserv) {
 		this.date_de_reserv = date_de_reserv;
 	}
 
 
 
-	public Date getDate_entre() {
+	public LocalDate getDate_entre() {
 		return date_entre;
 	}
 
 
 
-	public void setDate_entre(Date date_entre) {
+	public void setDate_entre(LocalDate date_entre) {
 		this.date_entre = date_entre;
 	}
 
 
 
-	public Date getDate_sortie() {
+	public LocalDate getDate_sortie() {
 		return date_sortie;
 	}
 
 
 
-	public void setDate_sortie(Date date_sortie) {
+	public void setDate_sortie(LocalDate date_sortie) {
 		this.date_sortie = date_sortie;
+	}
+
+
+
+	public LocalDateTime getDate_arrive() {
+		return date_arrive;
+	}
+
+
+
+	public void setDate_arrive(LocalDateTime date_arrive) {
+		this.date_arrive = date_arrive;
+	}
+
+
+
+	public boolean isValider() {
+		return valider;
+	}
+
+
+
+	public void setValider(boolean valider) {
+		this.valider = valider;
+	}
+
+
+
+	public String getPasseport() {
+		return passeport;
+	}
+
+
+
+	public void setPasseport(String passeport) {
+		this.passeport = passeport;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.devback.uc.Controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,42 +26,42 @@ import com.devback.uc.Service.ChambreA1Service;
 public class ChambreA1Controller {
 	List<ChambreA1> chambreA=new ArrayList<>();
 	//ChambreA1[] chshh=new ChambreA1[30];
-	ChambreA1 chsh=new ChambreA1( 0,null,null, "femme", null, null, null, null, null, null, null);
+	ChambreA1 chsh=new ChambreA1( 0,null,null, "femme", null, null, null, null, null,null, null, null, null,false);
 	//chambres dans l'appartement A1-N1
-	ChambreA1 chsh1=new ChambreA1( 1,"A1-N1","triple", "femme", "N1", null, null, null, null, null, null);
-	ChambreA1 chsh2=new ChambreA1( 2,"A1-N1","triple", "femme", "N1", null, null, null, null, null, null);
-	ChambreA1 chsh3=new ChambreA1( 3,"A1-N1","triple", "femme", "N1", null, null, null, null, null, null);
-	ChambreA1 chsh4=new ChambreA1( 4,"A1-N1","double", "femme", "N2", null, null, null, null, null, null);
-	ChambreA1 chsh5=new ChambreA1( 5,"A1-N1","double", "femme", "N2", null, null, null, null, null, null);
-	ChambreA1 chsh6=new ChambreA1( 6,"A1-N1","single", "femme", "N3", null, null, null, null, null, null);
+	ChambreA1 chsh1=new ChambreA1( 1,"A1-N1","triple", "femme", "N1", null,null, null,null, null, null, null, null,false);
+	ChambreA1 chsh2=new ChambreA1( 2,"A1-N1","triple", "femme", "N1", null,null, null, null,null, null, null, null,false);
+	ChambreA1 chsh3=new ChambreA1( 3,"A1-N1","triple", "femme", "N1", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh4=new ChambreA1( 4,"A1-N1","double", "femme", "N2", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh5=new ChambreA1( 5,"A1-N1","double", "femme", "N2", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh6=new ChambreA1( 6,"A1-N1","single", "femme", "N3", null,null, null, null, null, null, null, null,false);
 	//chambres dans l'appartement A1-N2
-	ChambreA1 chsh7=new ChambreA1( 7,"A1-N2","double", "femme", "N4", null, null, null, null, null, null);
-	ChambreA1 chsh8=new ChambreA1( 8,"A1-N2","double", "femme", "N4", null, null, null, null, null, null);
-	ChambreA1 chsh9=new ChambreA1( 9,"A1-N2","double", "femme", "N5", null, null, null, null, null, null);
-	ChambreA1 chsh10=new ChambreA1( 10,"A1-N2","double", "femme", "N5", null, null, null, null, null, null);
-	ChambreA1 chsh11=new ChambreA1( 11,"A1-N2","double", "femme", "N6", null, null, null, null, null, null);
-	ChambreA1 chsh12=new ChambreA1( 12,"A1-N2","double", "femme", "N6", null, null, null, null, null, null);
-	ChambreA1 chsh13=new ChambreA1( 13,"A1-N2","single", "femme", "N7", null, null, null, null, null, null);
+	ChambreA1 chsh7=new ChambreA1( 7,"A1-N2","double", "femme", "N4", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh8=new ChambreA1( 8,"A1-N2","double", "femme", "N4", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh9=new ChambreA1( 9,"A1-N2","double", "femme", "N5", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh10=new ChambreA1( 10,"A1-N2","double", "femme", "N5", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh11=new ChambreA1( 11,"A1-N2","double", "femme", "N6", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh12=new ChambreA1( 12,"A1-N2","double", "femme", "N6", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh13=new ChambreA1( 13,"A1-N2","single", "femme", "N7", null,null, null, null, null, null, null, null,false);
 	//chambres dans l'appartement A1-N3
-	ChambreA1 chsh14=new ChambreA1( 14,"A1-N3","single", "femme", "N8", null, null, null, null, null, null);
-	ChambreA1 chsh15=new ChambreA1( 15,"A1-N3","double", "femme", "N9", null, null, null, null, null, null);
-	ChambreA1 chsh16=new ChambreA1( 16,"A1-N3","double", "femme", "N9", null, null, null, null, null, null);
-	ChambreA1 chsh17=new ChambreA1(17,"A1-N3","double", "femme", "N10", null, null, null, null, null, null);
-	ChambreA1 chsh18=new ChambreA1(18 ,"A1-N3","double", "femme", "N10", null, null, null, null, null, null);
-	ChambreA1 chsh19=new ChambreA1( 19,"A1-N3","single", "femme", "N11", null, null, null, null, null, null);
+	ChambreA1 chsh14=new ChambreA1( 14,"A1-N3","single", "femme", "N8", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh15=new ChambreA1( 15,"A1-N3","double", "femme", "N9", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh16=new ChambreA1( 16,"A1-N3","double", "femme", "N9", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh17=new ChambreA1(17,"A1-N3","double", "femme", "N10", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh18=new ChambreA1(18 ,"A1-N3","double", "femme", "N10", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh19=new ChambreA1( 19,"A1-N3","single", "femme", "N11", null, null,null, null, null, null, null, null,false);
 	//chambres dans l'appartement A1-N4
-	ChambreA1 chsh20=new ChambreA1( 20,"A1-N4","single", "femme", "N12", null, null, null, null, null, null);
-	ChambreA1 chsh21=new ChambreA1( 21,"A1-N4","triple", "femme", "N13", null, null, null, null, null, null);
-	ChambreA1 chsh22=new ChambreA1( 22,"A1-N4","triple", "femme", "N13", null, null, null, null, null, null);
-	ChambreA1 chsh23=new ChambreA1(23,"A1-N4","triple", "femme", "N13", null, null, null, null, null, null);
-	ChambreA1 chsh24=new ChambreA1(24 ,"A1-N4","single", "femme", "N14", null, null, null, null, null, null);
-	ChambreA1 chsh25=new ChambreA1( 25,"A1-N4","single", "femme", "N15", null, null, null, null, null, null);
+	ChambreA1 chsh20=new ChambreA1( 20,"A1-N4","single", "femme", "N12", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh21=new ChambreA1( 21,"A1-N4","triple", "femme", "N13", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh22=new ChambreA1( 22,"A1-N4","triple", "femme", "N13", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh23=new ChambreA1(23,"A1-N4","triple", "femme", "N13", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh24=new ChambreA1(24 ,"A1-N4","single", "femme", "N14", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh25=new ChambreA1( 25,"A1-N4","single", "femme", "N15", null,null, null, null, null, null, null, null,false);
 	//chambres dans l'appartement A1-N5
-	ChambreA1 chsh26=new ChambreA1( 26,"A1-N5","single", "femme", "N16", null, null, null, null, null, null);
-	ChambreA1 chsh27=new ChambreA1( 27,"A1-N5","single", "femme", "N17", null, null, null, null, null, null);
-	ChambreA1 chsh28=new ChambreA1( 28,"A1-N5","double", "femme", "N18", null, null, null, null, null, null);
-	ChambreA1 chsh29=new ChambreA1(29,"A1-N5","double", "femme", "N18", null, null, null, null, null, null);
-	ChambreA1 chsh30=new ChambreA1(30 ,"A1-N5","single", "femme", "N19", null, null, null, null, null, null);
+	ChambreA1 chsh26=new ChambreA1( 26,"A1-N5","single", "femme", "N16", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh27=new ChambreA1( 27,"A1-N5","single", "femme", "N17", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh28=new ChambreA1( 28,"A1-N5","double", "femme", "N18", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh29=new ChambreA1(29,"A1-N5","double", "femme", "N18", null,null, null, null, null, null, null, null,false);
+	ChambreA1 chsh30=new ChambreA1(30 ,"A1-N5","single", "femme", "N19", null,null, null, null, null, null, null, null,false);
 	
 	@Autowired
 	private ChambreA1Service chambreService; 
@@ -70,6 +72,14 @@ public class ChambreA1Controller {
 	@GetMapping("/listCV")
 	public List<ChambreA1> getChambresv(){
 		return chambreService.getChambresv();
+		}
+	@GetMapping("/listCNV")
+	public List<ChambreA1> getChambresnv(){
+		return chambreService.getChambresnv();
+		}
+	@GetMapping("/listCVA")
+	public List<ChambreA1> getChambresva(){
+		return chambreService.getChambresva();
 		}
 	
 	@GetMapping("/C/{id}")
@@ -178,12 +188,50 @@ public class ChambreA1Controller {
 	}
 		@DeleteMapping("/deletes")
 		public void deleteA() {
-			chambreService.deleteChambres();
+			// Obtient la zone horaire locale
+			 ZoneId zoneId = ZoneId.systemDefault();
+		        
+		        // Obtient la date actuelle dans la zone horaire locale
+		        LocalDate dat = LocalDate.now(zoneId);
+		        int mois = dat.getMonthValue();
+		        if(mois > 5 && mois <10) {
+		        	chambreService.deleteChambres();
+		        }else {
+		        	System.out.println("Ce n'est pas le moment pour supprimer toutes les places ");
+		        }
+			
 		}
 		@GetMapping("/NCV")
 		public int nombreCV() {
 			return chambreService.getChambresv().size();
 		}
 		
+	    @GetMapping("/valider/{id}")
+	    public ResponseEntity<Boolean> valider(@PathVariable int id) {
+	    	ChambreA1 cha= this.getChambre(id);
+	    	cha.setValider(true);
+	    	this.chambreService.updateChambre(cha, id);
+	    	return ResponseEntity.ok(true);
+	    	
+	    }
+	    @GetMapping("/confirmer/{id}")
+	    public ResponseEntity<Boolean> confirmer(@PathVariable int id) {
+	    	ChambreA1 cha= this.getChambre(id);
+	    	// Obtient la zone horaire locale
+			 ZoneId zoneId = ZoneId.systemDefault();
+		        
+		        // Obtient la date actuelle dans la zone horaire locale
+		        LocalDate dat = LocalDate.now(zoneId);
+	    	cha.setDate_entre(dat);
+	    	this.chambreService.updateChambre(cha, id);
+	    	return ResponseEntity.ok(true);
+	    	
+	    }
+	   /* @PutMapping("/sortie/{id}")
+	    public ResponseEntity<ChambreA1> confirmer(@RequestBody ChambreA1 car,@PathVariable int id) {
+	    	this.chambreService.updateChambre(car, id);
+	    	return (ResponseEntity<ChambreA1>) ResponseEntity.ok();
+	    	
+	    }*/
 
 }

@@ -29,6 +29,24 @@ public class ChambreA1Service {
 	    	}
 			return chsh; 
 	     }
+	 public List<ChambreA1> getChambresnv(){
+		 List<ChambreA1> chsh=new ArrayList<>();
+	    	for(ChambreA1 chambre: chambreR.findAll()) {
+	    		if(chambre.getNom()!=null && chambre.getPrenom()!=null) {
+	    			chsh.add(chambre);
+	    		}
+	    	}
+			return chsh; 
+	     }
+	 public List<ChambreA1> getChambresva(){
+		 List<ChambreA1> chsh=new ArrayList<>();
+	    	for(ChambreA1 chambre: chambreR.findAll()) {
+	    		if(chambre.isValider()==true) {
+	    			chsh.add(chambre);
+	    		}
+	    	}
+			return chsh; 
+	     }
 	 public ChambreA1 getChambre(int id) {
 		 ChambreA1 other = null;
 		return chambreR.findById(id).orElse(other);
@@ -47,5 +65,5 @@ public class ChambreA1Service {
 		 chambreR.deleteAll();
 	 }
 	 
-
+     
 }
