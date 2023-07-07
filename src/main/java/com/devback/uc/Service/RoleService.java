@@ -2,6 +2,7 @@ package com.devback.uc.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.devback.uc.Entity.ERole;
 import com.devback.uc.Entity.Role;
+import com.devback.uc.Entity.User;
 import com.devback.uc.Repository.RoleRepos;
+import com.devback.uc.Repository.UserRepos;
 
 @Service
 public class RoleService {
 	@Autowired
     private RoleRepos roleRepository;
+	
+	@Autowired
+    private UserRepos userRepository;
 
     
     public RoleService(RoleRepos roleRepository) {
@@ -59,5 +65,19 @@ public class RoleService {
 		return a;
     	
     }
+    public String getRole(Long id) {
+		//User other = null;
+		Role rd=new Role();
+		User a= userRepository.findById(id);
+		Set<Role> rl= a.getRole();
+		/*rl.forEach(ca -> { 
+			 r = ca;
+			 });*/
+		for(Role r: rl) {
+			rd=r;
+		}
+		return rd.getName().name();
+		
+	}
 }
 

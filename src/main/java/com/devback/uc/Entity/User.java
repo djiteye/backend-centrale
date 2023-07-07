@@ -3,6 +3,8 @@ package com.devback.uc.Entity;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.Id;
@@ -22,6 +24,7 @@ import lombok.Setter;
 @Table(name="User")
 public class User {
 	@Id
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String username;
 	private String email;
@@ -30,9 +33,9 @@ public class User {
 	//private String role;
 	@DBRef
 	  private Set<Role> roles;
-	public User(Long Id, String username, String email, String password, String genre) {
+	public User(Long id, String username, String email, String password, String genre) {
 		super();
-		this.id=Id;
+		this.id=id;
 		this.username=username;
 		this.email=email;
 		this.password=password;
@@ -79,6 +82,10 @@ public class User {
 		this.roles = role;
 	}
 	public User orElse(User other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Role orElse(Role other) {
 		// TODO Auto-generated method stub
 		return null;
 	}

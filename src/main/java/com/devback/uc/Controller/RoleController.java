@@ -12,6 +12,7 @@ import com.devback.uc.Service.RoleService;
 
 @RestController
 @RequestMapping("/api/roles")
+@CrossOrigin(origins = "http://localhost:4200")
 public class RoleController {
 	@Autowired
     private RoleService roleService;
@@ -31,5 +32,13 @@ public class RoleController {
     public ResponseEntity<?> getRoleByName(@PathVariable ERole name) {
         Optional<Role> role = roleService.findByName(name);
         return ResponseEntity.ok(role);
+    }
+    
+    @GetMapping("/R/{id}")
+    public ResponseEntity<?> getRole(@PathVariable long id) {
+        //Optional<Role> role = roleService.findByName(name);
+    	String rn=roleService.getRole(id); 
+    	return  ResponseEntity.ok(rn);
+        //return ResponseEntity.ok(rn);
     }
 }

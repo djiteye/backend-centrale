@@ -32,6 +32,7 @@ import com.devback.uc.Repository.UserRepos;
 //import com.devback.uc.Securite.UserDetailsImpl;
 import com.devback.uc.Securite.Jwt.JwtUtils;
 import com.devback.uc.Service.RoleService;
+import com.devback.uc.Service.UserService;
 
 
 
@@ -52,6 +53,9 @@ public class AuthController {
 
 	@Autowired
 	PasswordEncoder encoder;
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
     private RoleService roleService;
@@ -111,8 +115,10 @@ public class AuthController {
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
 
+		long idd= this.userService.getUsers().size();
 		// Create new user's account
-		User user = new User(signUpRequest.getId(),
+		User user = new User(//signUpRequest.getId(),
+				             idd++,
 				             signUpRequest.getUsername(), 
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()),
