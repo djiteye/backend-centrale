@@ -214,10 +214,26 @@ public class ChambreA3Controller {
 		        }
 			
 		}
-		@GetMapping("/NCV")
-		public int nombreCV() {
-			return chambreService.getChambresv().size();
-		}
+		//chambre dispos
+				@GetMapping("/NCD")
+				public int nombreCD() {
+					return chambreService.getChambresv().size();
+				}
+				//chambre reservée
+				@GetMapping("/NCR")
+				public int nombreCR() {
+					return chambreService.getChambresnv().size();
+				}
+				//chambre réellement valider
+				@GetMapping("/NCVA")
+				public int nombreCVA() {
+					return chambreService.getChambresrva().size();
+				}
+				//chambre réellement vide
+				@GetMapping("/NCV")
+				public int nombreCV() {
+					return chambreService.getChambresrvi().size();
+				}
 		
 	    @GetMapping("/valider/{id}")
 	    public ResponseEntity<Boolean> valider(@PathVariable int id) {
@@ -227,7 +243,8 @@ public class ChambreA3Controller {
 	    	return ResponseEntity.ok(true);
 	    	
 	    }
-	    @GetMapping("/confirmer/{id}")
+	    @SuppressWarnings("deprecation")
+		@GetMapping("/confirmer/{id}")
 	    public ResponseEntity<Boolean> confirmer(@PathVariable int id) {
 	    	ChambreA3 cha= this.getChambre(id);
 	    	// Obtient la zone horaire locale
@@ -236,7 +253,7 @@ public class ChambreA3Controller {
 		        // Obtient la date actuelle dans la zone horaire locale
 		        LocalDate dat = LocalDate.now(zoneId);
 		        Date dats=new Date();
-		        dats.setMonth(06);
+		        dats.setMonth(5);
 		        dats.setDate(30);
 		        cha.setDate_sortie(dats);
 	    	cha.setDate_entre(dat);

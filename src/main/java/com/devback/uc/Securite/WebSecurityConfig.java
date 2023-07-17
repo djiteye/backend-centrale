@@ -31,10 +31,10 @@ import com.devback.uc.Securite.Jwt.AuthTokenFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-		securedEnabled = true,
-		 jsr250Enabled = true,
-		prePostEnabled = true,
-		proxyTargetClass = true)
+		/*securedEnabled = true,
+		 jsr250Enabled = true,*/
+		prePostEnabled = true
+		/*proxyTargetClass = true*/)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
@@ -54,8 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+	public AuthenticationManager authenticationManager() throws Exception {
+		return super.authenticationManager();
 	}
 
 	@Bean
@@ -70,7 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
 			.antMatchers("/api/**").permitAll()
-			.anyRequest().permitAll();
+			.antMatchers("/ChambreA1/**").permitAll()
+			.antMatchers("/ChambreA2/**").permitAll()
+			.antMatchers("/ChambreA3/**").permitAll()
+			.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

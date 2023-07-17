@@ -21,12 +21,12 @@ public class UserService {
 			 });
 		 return car;
 	 }
-	 public User getUser(Long id) {
+	 public User getUser(String id) {
 		 User other = null;
 		return userR.findById(id).orElse(other);
 	 }
 	 
-	 public void deleteUser(Long id) {
+	 public void deleteUser(String id) {
 		 userR.deleteById(id);
 	 }
 	/* public void addUser(User car) {

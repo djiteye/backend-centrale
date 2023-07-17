@@ -20,10 +20,31 @@ public class ChambreA1Service {
 			 });
 		 return car;
 	 }
+	 //chambre dispos
 	 public List<ChambreA1> getChambresv(){
 		 List<ChambreA1> chsh=new ArrayList<>();
 	    	for(ChambreA1 chambre: chambreR.findAll()) {
 	    		if(chambre.getNom()==null && chambre.getPrenom()==null) {
+	    			chsh.add(chambre);
+	    		}
+	    	}
+			return chsh; 
+	     }
+	 //chambre réellement valider 
+	 public List<ChambreA1> getChambresrva(){
+		 List<ChambreA1> chsh=new ArrayList<>();
+	    	for(ChambreA1 chambre: chambreR.findAll()) {
+	    		if(chambre.getDate_entre()!=null && chambre.getDate_sortie()!=null) {
+	    			chsh.add(chambre);
+	    		}
+	    	}
+			return chsh; 
+	     }
+	 //chambre réellement vide
+	 public List<ChambreA1> getChambresrvi(){
+		 List<ChambreA1> chsh=new ArrayList<>();
+	    	for(ChambreA1 chambre: chambreR.findAll()) {
+	    		if(chambre.getDate_entre()==null && chambre.getDate_sortie()==null) {
 	    			chsh.add(chambre);
 	    		}
 	    	}
@@ -56,6 +77,7 @@ public class ChambreA1Service {
 	    	}
 			return chsh; 
 	     }
+	 //chambres reservées
 	 public List<ChambreA1> getChambresnv(){
 		 List<ChambreA1> chsh=new ArrayList<>();
 	    	for(ChambreA1 chambre: chambreR.findAll()) {

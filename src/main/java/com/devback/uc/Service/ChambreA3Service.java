@@ -22,7 +22,7 @@ public class ChambreA3Service {
 			 });
 		 return car;
 	 }
-	 public List<ChambreA3> getChambresv(){
+	 public List<ChambreA3> getChambresvi(){
 		 List<ChambreA3> chsh=new ArrayList<>();
 	    	for(ChambreA3 chambre: chambreR.findAll()) {
 	    		if(chambre.getNom()==null && chambre.getPrenom()==null) {
@@ -58,7 +58,7 @@ public class ChambreA3Service {
 	    	}
 			return chsh; 
 	     }
-	 public List<ChambreA3> getChambresnv(){
+	 public List<ChambreA3> getChambresnvf(){
 		 List<ChambreA3> chsh=new ArrayList<>();
 	    	for(ChambreA3 chambre: chambreR.findAll()) {
 	    		if(chambre.getNom()!=null && chambre.getPrenom()!=null) {
@@ -93,5 +93,45 @@ public class ChambreA3Service {
 	 public void deleteChambres() {
 		 chambreR.deleteAll();
 	 }
+	//chambre dispos
+		 public List<ChambreA3> getChambresv(){
+			 List<ChambreA3> chsh=new ArrayList<>();
+		    	for(ChambreA3 chambre: chambreR.findAll()) {
+		    		if(chambre.getNom()==null && chambre.getPrenom()==null) {
+		    			chsh.add(chambre);
+		    		}
+		    	}
+				return chsh; 
+		     }
+		 //chambre réellement valider 
+		 public List<ChambreA3> getChambresrva(){
+			 List<ChambreA3> chsh=new ArrayList<>();
+		    	for(ChambreA3 chambre: chambreR.findAll()) {
+		    		if(chambre.getDate_entre()!=null && chambre.getDate_sortie()!=null) {
+		    			chsh.add(chambre);
+		    		}
+		    	}
+				return chsh; 
+		     }
+		 //chambre réellement vide
+		 public List<ChambreA3> getChambresrvi(){
+			 List<ChambreA3> chsh=new ArrayList<>();
+		    	for(ChambreA3 chambre: chambreR.findAll()) {
+		    		if(chambre.getDate_entre()==null && chambre.getDate_sortie()==null) {
+		    			chsh.add(chambre);
+		    		}
+		    	}
+				return chsh; 
+		     }
+		//chambres reservées
+			 public List<ChambreA3> getChambresnv(){
+				 List<ChambreA3> chsh=new ArrayList<>();
+			    	for(ChambreA3 chambre: chambreR.findAll()) {
+			    		if(chambre.getNom()!=null && chambre.getPrenom()!=null) {
+			    			chsh.add(chambre);
+			    		}
+			    	}
+					return chsh; 
+			     }
 	 
 }

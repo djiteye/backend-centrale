@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
-	private Long Id;
+	private String Id;
 
 	private String username;
 
@@ -36,15 +36,15 @@ public class UserDetailsImpl implements UserDetails {
 
 	
 
-	public UserDetailsImpl(Long Id,String username2, String email2, String genre, String password2,
+	public UserDetailsImpl(String Id,String username2, String email2, String genre, String password2,
 			List<GrantedAuthority> authorities2) {
 		// TODO Auto-generated constructor stub
-		/*this.id=Id;
+		this.Id=Id;
 		this.username=username2;
 		this.email=email2;
 		this.genre=genre;
 		this.password=password2;
-		this.authorities=authorities2;*/
+		this.authorities=authorities2;
 	}
 
 	public static UserDetailsImpl build(User user) {
@@ -66,7 +66,7 @@ public class UserDetailsImpl implements UserDetails {
 		return authorities;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return Id;
 	}
 

@@ -21,7 +21,7 @@ public class ChambreA2Service {
 			 });
 		 return car;
 	 }
-	 public List<ChambreA2> getChambresv(){
+	 public List<ChambreA2> getChambresvi(){
 		 List<ChambreA2> chsh=new ArrayList<>();
 	    	for(ChambreA2 chambre: chambreR.findAll()) {
 	    		if(chambre.getNom()==null && chambre.getPrenom()==null) {
@@ -57,7 +57,7 @@ public class ChambreA2Service {
 	    	}
 			return chsh; 
 	     }
-	 public List<ChambreA2> getChambresnv(){
+	 public List<ChambreA2> getChambresnvf(){
 		 List<ChambreA2> chsh=new ArrayList<>();
 	    	for(ChambreA2 chambre: chambreR.findAll()) {
 	    		if(chambre.getNom()!=null && chambre.getPrenom()!=null) {
@@ -93,4 +93,44 @@ public class ChambreA2Service {
 		 chambreR.deleteAll();
 	 }
 	 
+	 //chambre dispos
+	 public List<ChambreA2> getChambresv(){
+		 List<ChambreA2> chsh=new ArrayList<>();
+	    	for(ChambreA2 chambre: chambreR.findAll()) {
+	    		if(chambre.getNom()==null && chambre.getPrenom()==null) {
+	    			chsh.add(chambre);
+	    		}
+	    	}
+			return chsh; 
+	     }
+	 //chambre réellement valider 
+	 public List<ChambreA2> getChambresrva(){
+		 List<ChambreA2> chsh=new ArrayList<>();
+	    	for(ChambreA2 chambre: chambreR.findAll()) {
+	    		if(chambre.getDate_entre()!=null && chambre.getDate_sortie()!=null) {
+	    			chsh.add(chambre);
+	    		}
+	    	}
+			return chsh; 
+	     }
+	 //chambre réellement vide
+	 public List<ChambreA2> getChambresrvi(){
+		 List<ChambreA2> chsh=new ArrayList<>();
+	    	for(ChambreA2 chambre: chambreR.findAll()) {
+	    		if(chambre.getDate_entre()==null && chambre.getDate_sortie()==null) {
+	    			chsh.add(chambre);
+	    		}
+	    	}
+			return chsh; 
+	     }
+	//chambres reservées
+		 public List<ChambreA2> getChambresnv(){
+			 List<ChambreA2> chsh=new ArrayList<>();
+		    	for(ChambreA2 chambre: chambreR.findAll()) {
+		    		if(chambre.getNom()!=null && chambre.getPrenom()!=null) {
+		    			chsh.add(chambre);
+		    		}
+		    	}
+				return chsh; 
+		     }
 }

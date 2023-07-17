@@ -3,12 +3,12 @@ package com.devback.uc.Payload.Request;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+/*import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;*/
 //import javax.persistence.Id;
 import javax.validation.constraints.Email;
 
-import org.springframework.data.annotation.Id;
+//import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +22,9 @@ import lombok.Setter;
 @Data
 @Entity
 public class SignupRequest {
-	@Id
+	/*@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private String id;*/
 	
     private String username;
  
@@ -40,8 +40,8 @@ public class SignupRequest {
     
     
     
-    public SignupRequest(long id, String a, String e, String g , String p, Set<String> r) {
-    	this.id=id;
+    public SignupRequest( String a, String e, String g , String p, Set<String> r) {
+    	//this.id=id;
     	this.username=a;
     	this.email=e;
     	this.genre=g;
@@ -50,13 +50,14 @@ public class SignupRequest {
     	
     }
 
-	public long getId() {
+	
+	/*public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
-	}
+	}*/
 
 	public String getUsername() {
 		return username;

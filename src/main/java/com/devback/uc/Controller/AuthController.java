@@ -1,7 +1,7 @@
 package com.devback.uc.Controller;
 import java.util.HashSet;
 //import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 import java.util.Set;
 //import java.util.stream.Collectors;
 
@@ -9,7 +9,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 /*import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,15 +27,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.devback.uc.Entity.ERole;
+import com.devback.uc.Entity.RefreshToken;
 import com.devback.uc.Entity.Role;
 import com.devback.uc.Entity.User;
 import com.devback.uc.Payload.Request.LoginRequest;
 import com.devback.uc.Payload.Request.SignupRequest;
+import com.devback.uc.Payload.Request.TokenDTO;
 //import com.devback.uc.Payload.Response.JwtResponse;
 import com.devback.uc.Payload.Response.MessageResponse;
+import com.devback.uc.Repository.RefreshTokenRepository;
 import com.devback.uc.Repository.RoleRepos;
 import com.devback.uc.Repository.UserRepos;
-//import com.devback.uc.Securite.UserDetailsImpl;
+import com.devback.uc.Securite.UserDetailsServiceImpl;
 import com.devback.uc.Securite.Jwt.JwtUtils;
 import com.devback.uc.Service.RoleService;
 import com.devback.uc.Service.UserService;
@@ -58,25 +67,32 @@ public class AuthController {
 	UserService userService;
 	
 	@Autowired
+	UserDetailsServiceImpl userDetailsServiceImpl;
+	
+	@Autowired
+	private RefreshTokenRepository refreshTokenRepository;
+	
+	@Autowired
     private RoleService roleService;
+	
 
 	@Autowired
-	JwtUtils jwtUtils;
+	private JwtUtils jwtUtils;
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-		System.out.println("les informations d'authentification sont: "+ loginRequest.getUsername()+" "+ loginRequest.getPassword());
+		/*System.out.println("les informations d'authentification sont: "+ loginRequest.getUsername()+" "+ loginRequest.getPassword());
 		Optional<User> princip= userRepository.findByUsername(loginRequest.getUsername());
 		LoginRequest pr= new LoginRequest(princip.get().getUsername(), princip.get().getPassword());
 		LoginRequest cr= new LoginRequest(loginRequest.getUsername(), loginRequest.getPassword());
 		System.out.println("les informations d'authentification du principal sont: "+ pr.getUsername()+" "+ pr.getPassword());
-		System.out.println("les informations d'authentification du crential sont: "+ cr.getUsername()+" "+ cr.getPassword());
+		System.out.println("les informations d'authentification du crential sont: "+ cr.getUsername()+" "+ cr.getPassword());*/
 		
-		if(encoder.matches(cr.getPassword(),pr.getPassword())/*pr.getPassword().equals(cr.getPassword())*/) {
-			return ResponseEntity.ok(princip);
+		//if(encoder.matches(cr.getPassword(),pr.getPassword())/*pr.getPassword().equals(cr.getPassword())*/) {
+		/*	return ResponseEntity.ok(princip);
 		}
 		else{
-			return (ResponseEntity<?>) ResponseEntity.internalServerError();}
+			return (ResponseEntity<?>) ResponseEntity.internalServerError();}*/
 	 
 	  /*  Authentication authentication = authenticationManager.authenticate(
 	            new UsernamePasswordAuthenticationToken(pr,cr));
@@ -97,6 +113,19 @@ public class AuthController {
 	            roles);
 
 	    return ResponseEntity.ok(jwtResponse);*/
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		User user = (User) authentication.getPrincipal();
+		
+		 //User user= (User) use;
+		RefreshToken refreshToken = new RefreshToken();
+		refreshToken.setOwner(user);
+		refreshTokenRepository.save(refreshToken);
+		
+		String accessToken = jwtUtils.generateAccessToken(user);
+		String refreshTokenString = jwtUtils.generateRefreshToken(user, refreshToken.getId());
+		
+		return ResponseEntity.ok(new TokenDTO(user.getId(), accessToken, refreshTokenString));
 	}
 
 	@PostMapping("/signup")
@@ -114,11 +143,13 @@ public class AuthController {
 					.badRequest()
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
+		
 
-		long idd= this.userService.getUsers().size();
+		/*long idd= this.userService.getUsers().size()+1;
+		String Id= Long.toString(idd);*/
 		// Create new user's account
 		User user = new User(//signUpRequest.getId(),
-				             idd++,
+				             //Id,
 				             signUpRequest.getUsername(), 
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()),
@@ -136,7 +167,6 @@ public class AuthController {
 		 this.roleService.createRole(ROLE_USER);}
 		Set<String> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
-
 		if (strRoles.isEmpty()) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found1."));
@@ -170,8 +200,83 @@ public class AuthController {
 
 		user.setRole(roles);
 		userRepository.save(user);
+		RefreshToken refreshToken = new RefreshToken();
+		refreshToken.setOwner(user);
+		refreshTokenRepository.save(refreshToken);
+		
+		String accessToken = jwtUtils.generateAccessToken(user);
+		String refreshTokenString = jwtUtils.generateRefreshToken(user, refreshToken.getId());
+		
+		return ResponseEntity.ok(new TokenDTO(user.getId(), accessToken, refreshTokenString));
 
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		//return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
+	
+
+	@PostMapping("/logout")
+	public ResponseEntity<HttpMessageConverter<?>> logout(@RequestBody TokenDTO dto) {
+		String refreshTokenString = dto.getRefreshToken();
+		if(jwtUtils.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString))) {
+			// existe dans la base de donnée 
+			refreshTokenRepository.deleteById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString));
+			return ResponseEntity.ok().build();
+		}
+		
+		throw new BadCredentialsException("Invalid token");
+	}
+	
+
+	@PostMapping("/logout-all")
+	public ResponseEntity<HttpMessageConverter<?>> logoutAll(@RequestBody TokenDTO dto) {
+		String refreshTokenString = dto.getRefreshToken();
+		if(jwtUtils.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString))) {
+			// existe dans la base de donnée 
+			refreshTokenRepository.deleteByOwner_id(jwtUtils.getUserIdFromRefreshToken(refreshTokenString));
+			return ResponseEntity.ok().build();
+		}
+		
+		throw new BadCredentialsException("Invalid token");
+	}
+	
+
+	@PostMapping("/access-token")
+	public ResponseEntity<?> accessToken(@RequestBody TokenDTO dto) {
+		String refreshTokenString = dto.getRefreshToken();
+		if(jwtUtils.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString))) {
+			// existe dans la base de donnée
+			User user = userDetailsServiceImpl.findById(jwtUtils.getUserIdFromRefreshToken(refreshTokenString));
+			
+			String accessToken = jwtUtils.generateAccessToken(user);
+			return ResponseEntity.ok(new TokenDTO(user.getId(), accessToken, refreshTokenString));
+		}
+		
+		throw new BadCredentialsException("Invalid token");
+	}
+	
+	
+	
+	@PostMapping("/refresh-token")
+	public ResponseEntity<?> refreshToken(@RequestBody TokenDTO dto) {
+		String refreshTokenString = dto.getRefreshToken();
+		if(jwtUtils.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString))) {
+			// existe dans la base de donnée
+			
+			refreshTokenRepository.deleteById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString));
+			
+			
+			User user = userDetailsServiceImpl.findById(jwtUtils.getUserIdFromRefreshToken(refreshTokenString));
+			RefreshToken refreshToken = new RefreshToken();
+			refreshToken.setOwner(user);
+			refreshTokenRepository.save(refreshToken);
+			
+			String accessToken = jwtUtils.generateAccessToken(user);
+			String newRefreshTokenString = jwtUtils.generateRefreshToken(user, refreshToken.getId());
+			
+			return ResponseEntity.ok(new TokenDTO(user.getId(), accessToken, newRefreshTokenString));
+		}
+		
+		throw new BadCredentialsException("Invalid token");
+	}
+	
 	
 	}
