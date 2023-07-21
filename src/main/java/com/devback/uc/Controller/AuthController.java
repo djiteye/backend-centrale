@@ -225,6 +225,18 @@ public class AuthController {
 		throw new BadCredentialsException("Invalid token");
 	}
 	
+	@PostMapping("/logout-expire")
+	public ResponseEntity<?> logoutex(@RequestBody TokenDTO dto) {
+		String refreshTokenString = dto.getRefreshToken();
+		//if(!jwtUtils.validateRefreshToken(refreshTokenString) && !refreshTokenRepository.existsById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString))) {
+			// existe dans la base de donnée 
+			refreshTokenRepository.deleteById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString));
+			return ResponseEntity.ok().build();
+		/*}
+		
+		throw new BadCredentialsException("Invalid token");*/
+	}
+	
 
 	@PostMapping("/logout-all")
 	public ResponseEntity<HttpMessageConverter<?>> logoutAll(@RequestBody TokenDTO dto) {
@@ -277,6 +289,17 @@ public class AuthController {
 		
 		throw new BadCredentialsException("Invalid token");
 	}
-	
+	/*@PostMapping("/token-valide")
+	public ResponseEntity<?> tokenv(@RequestBody TokenDTO dto){
+		
+		String refreshTokenString = dto.getRefreshToken();
+		if(!jwtUtils.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString))) {
+			// existe dans la base de donnée 
+			refreshTokenRepository.deleteById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString));
+			return ResponseEntity.ok("token non-valide");
+		}
+		//refreshTokenRepository.deleteById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString));
+		throw new BadCredentialsException("valid token");
+	}*/
 	
 	}

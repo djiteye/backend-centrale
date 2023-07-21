@@ -77,7 +77,9 @@ public class StartupRunner{
 		this.roleService.createRole(ROLE_USER);}
 		//Set<String> strRoles = user.getRoles();
 		Set<Role> roles = new HashSet<>();
-		roles.add(ROLE_ADMIN);
+		Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+		roles.add(adminRole );
 
 		user.setRole(roles);
 		userRepository.save(user);
