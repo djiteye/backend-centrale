@@ -12,18 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.devback.uc.Securite.Jwt.JwtUtils;
 
-
 @Component
-public class ChambreA1Interceptor implements HandlerInterceptor {
-	
+public class ChambreA3Interceptor implements HandlerInterceptor {
+
+
 	@Autowired
 	private JwtUtils jwtUtils;
-
-
 	
-	Logger log= LoggerFactory.getLogger(ChambreA1Interceptor.class);
+	Logger log= LoggerFactory.getLogger(ChambreA3Interceptor.class);
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {  
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String authorizationHeader = request.getHeader("Authorization");
 		String accessToken = authorizationHeader.substring(7); //
 

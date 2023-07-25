@@ -13,7 +13,7 @@ import com.devback.uc.Entity.ERole;
 import com.devback.uc.Entity.RefreshToken;
 import com.devback.uc.Entity.Role;
 import com.devback.uc.Entity.User;
-import com.devback.uc.Repository.RefreshTokenRepository;
+//import com.devback.uc.Repository.RefreshTokenRepository;
 import com.devback.uc.Repository.RoleRepos;
 import com.devback.uc.Repository.UserRepos;
 import com.devback.uc.Securite.UserDetailsServiceImpl;
@@ -39,8 +39,8 @@ public class StartupRunner{
 		@Autowired
 		UserDetailsServiceImpl userDetailsServiceImpl;
 		
-		@Autowired
-		private RefreshTokenRepository refreshTokenRepository;
+		/*@Autowired
+		private RefreshTokenRepository refreshTokenRepository;*/
 		
 		@Autowired
 	    private RoleService roleService;
@@ -85,16 +85,16 @@ public class StartupRunner{
 		userRepository.save(user);
 		RefreshToken refreshToken = new RefreshToken();
 		refreshToken.setOwner(user);
-		refreshTokenRepository.save(refreshToken);
+		//refreshTokenRepository.save(refreshToken);
 
 		String accessToken = jwtUtils.generateAccessToken(user);
 		String refreshTokenString = jwtUtils.generateRefreshToken(user, refreshToken.getId());
 
 		//return ResponseEntity.ok(new TokenDTO(user.getId(), accessToken, refreshTokenString));
-		System.out.println("l'utilisateur a été créer");
+		System.out.println("l'utilisateur par defaut a été créer");
 				
 			}else {
-				System.out.println("l'utilisateur n'a pas été créer");
+				System.out.println("l'utilisateur par defaut existe déjà");
 			}
 	    }
 }

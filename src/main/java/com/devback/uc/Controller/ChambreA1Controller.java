@@ -25,6 +25,7 @@ import com.devback.uc.Service.ChambreA1Service;
 @RequestMapping(value="ChambreA1")
 @CrossOrigin(origins = "http://localhost:4200")
 public class ChambreA1Controller {
+	
 	List<ChambreA1> chambreA=new ArrayList<>();
 	//ChambreA1[] chshh=new ChambreA1[30];
 	ChambreA1 chsh=new ChambreA1( 0,null,null, "femme", null, null, null, null, null,null, null, null, null,false);
@@ -66,12 +67,15 @@ public class ChambreA1Controller {
 	
 	@Autowired
 	private ChambreA1Service chambreService; 
+	
+	
 	@GetMapping("/listC")
-	public List<ChambreA1> getChambres(){
-		return chambreService.getChambres();
+	public ResponseEntity<List<ChambreA1>> getChambres(){
+		return  ResponseEntity.ok(chambreService.getChambres());
 		}
 	@GetMapping("/listCV")
 	public List<ChambreA1> getChambresv(){
+		
 		return chambreService.getChambresv();
 		}
 	@GetMapping("/NCSV")
@@ -97,6 +101,7 @@ public class ChambreA1Controller {
 	
 	@GetMapping("/C/{id}")
 	public ChambreA1 getChambre(@PathVariable int id) {
+	
 		return chambreService.getChambre(id);
 	}
 	@DeleteMapping("/delete/{id}")
@@ -150,7 +155,7 @@ public class ChambreA1Controller {
 		//@SuppressWarnings("unchecked")
 		@SuppressWarnings("unchecked")
 		@GetMapping("/prepCAP")
-		public ResponseEntity<Boolean> addc() {
+		public ResponseEntity<Boolean> addc(){
 			int co= chambreService.getChambresv().size();
 			//int ca= chambreService.getChambres().size();
 			
@@ -207,7 +212,7 @@ public class ChambreA1Controller {
 		        // Obtient la date actuelle dans la zone horaire locale
 		        LocalDate dat = LocalDate.now(zoneId);
 		        int mois = dat.getMonthValue();
-		        if(mois > 5 && mois <10) {
+		        if(mois > 0 && mois <13) {
 		        	chambreService.deleteChambres();
 		        }else {
 		        	System.out.println("Ce n'est pas le moment pour supprimer toutes les places ");

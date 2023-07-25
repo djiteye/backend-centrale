@@ -120,7 +120,7 @@ public class AuthController {
 		 //User user= (User) use;
 		RefreshToken refreshToken = new RefreshToken();
 		refreshToken.setOwner(user);
-		refreshTokenRepository.save(refreshToken);
+		//refreshTokenRepository.save(refreshToken);
 		
 		String accessToken = jwtUtils.generateAccessToken(user);
 		String refreshTokenString = jwtUtils.generateRefreshToken(user, refreshToken.getId());
@@ -202,7 +202,7 @@ public class AuthController {
 		userRepository.save(user);
 		RefreshToken refreshToken = new RefreshToken();
 		refreshToken.setOwner(user);
-		refreshTokenRepository.save(refreshToken);
+		//refreshTokenRepository.save(refreshToken);
 		
 		String accessToken = jwtUtils.generateAccessToken(user);
 		String refreshTokenString = jwtUtils.generateRefreshToken(user, refreshToken.getId());
@@ -225,17 +225,6 @@ public class AuthController {
 		throw new BadCredentialsException("Invalid token");
 	}
 	
-	@PostMapping("/logout-expire")
-	public ResponseEntity<?> logoutex(@RequestBody TokenDTO dto) {
-		String refreshTokenString = dto.getRefreshToken();
-		//if(!jwtUtils.validateRefreshToken(refreshTokenString) && !refreshTokenRepository.existsById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString))) {
-			// existe dans la base de donnée 
-			refreshTokenRepository.deleteById(jwtUtils.getTokenIdfromRefreshToken(refreshTokenString));
-			return ResponseEntity.ok().build();
-		/*}
-		
-		throw new BadCredentialsException("Invalid token");*/
-	}
 	
 
 	@PostMapping("/logout-all")

@@ -207,7 +207,7 @@ public class ChambreA2Ccontroller {
 		        // Obtient la date actuelle dans la zone horaire locale
 		        LocalDate dat = LocalDate.now(zoneId);
 		        int mois = dat.getMonthValue();
-		        if(mois > 5 && mois <10) {
+		        if(mois > 0 && mois <13) {
 		        	chambreService.deleteChambres();
 		        }else {
 		        	System.out.println("Ce n'est pas le moment pour supprimer toutes les places ");

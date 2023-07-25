@@ -12,17 +12,16 @@ import org.jline.utils.Log;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+/*import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;*/
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.devback.uc.Entity.User;
 //import com.devback.uc.Entity.User;
-import com.devback.uc.Securite.UserDetailsServiceImpl;
-
+//import com.devback.uc.Entity.User;
+//import com.devback.uc.Securite.UserDetailsServiceImpl;
 
 
 
@@ -31,8 +30,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 	  @Autowired
 	  private JwtUtils jwtUtils;
 
-	  @Autowired
-	  private UserDetailsServiceImpl userDetailsService;
+	  /*@Autowired
+	  private UserDetailsServiceImpl userDetailsService;*/
 
 	  @Override
 		protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -41,11 +40,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 			try {
 				Optional<String> accessToken = parseAccessToken(request);
 				if(accessToken.isPresent() && jwtUtils.validateAccessToken(accessToken.get())) {
-					String userId = jwtUtils.getUserIdFromAccessToken(accessToken.get());
+					/*String userId = jwtUtils.getUserIdFromAccessToken(accessToken.get());
 					User user = userDetailsService.findById(userId);
 					UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(user, null, ((Authentication) user).getAuthorities());
 					upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-					SecurityContextHolder.getContext().setAuthentication(upat);
+					SecurityContextHolder.getContext().setAuthentication(upat);*/
 				}
 			}catch(Exception e) {
 				Log.error("cannot set authentication", e);
