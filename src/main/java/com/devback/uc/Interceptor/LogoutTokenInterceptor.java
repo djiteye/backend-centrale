@@ -37,9 +37,10 @@ public class LogoutTokenInterceptor implements HandlerInterceptor {
 				log.info("preHandle invoke ... {}:{} "+ request.getRequestURI(), request.getMethod());
 				return true;
 			}
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or missing access token");
-            /*response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Invalid or missing access token");*/
+			//response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or missing access token");
+			//response.getWriter().write("{\"error\":\"Unauthorized\"}");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED );
+            response.getWriter().write("{\n"+"error: \"Invalid or missing access token"+"\n}");
             return false; // Bloquez la requête, ne la laissez pas continuer son traitement
         }
 	}

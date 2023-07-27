@@ -35,6 +35,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(logoutTokenInterceptor).addPathPatterns("/api/auth/signup");
+        registry.addInterceptor(logoutTokenInterceptor).addPathPatterns("/api/user/**");
         registry.addInterceptor(chambreA1Interceptor).addPathPatterns("/ChambreA1/**");
         registry.addInterceptor(chambreA2Interceptor).addPathPatterns("/ChambreA2/**");
         registry.addInterceptor(chambreA3Interceptor).addPathPatterns("/ChambreA3/**");

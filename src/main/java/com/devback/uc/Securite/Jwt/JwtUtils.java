@@ -81,7 +81,7 @@ static final String issuer = "myApp";
 private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 
 	
-	@Value("#{${com.devback.uc.accessTokenExpirationMinutes} * 60 * 1000}")
+	@Value("#{${com.devback.uc.accessTokenExpirationMinutes} * 10 * 1000}")
 	private int accessTokenExpirationMs;
 	//@Value("#{${refreshTokenExpirationDays} * 24 * 60 * 60 * 1000}")
 	private long refreshTokenExpirationMs;
@@ -92,7 +92,7 @@ private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 	private JWTVerifier refreshTokenVerifier;
 	
 	public JwtUtils(@Value("${accessTokenSecret}") String accessTokenSecret, @Value("${refreshTokenSecret}") String refreshTokenSecret, @Value("${com.devback.uc.refreshTokenExpirationDays}") int refreshTokenExpirationDays) {
-		refreshTokenExpirationMs = (long) refreshTokenExpirationDays  * 60 * 1000;
+		refreshTokenExpirationMs = (long) refreshTokenExpirationDays  * 10 * 1000;
 		accessTokenAlgorithm = Algorithm.HMAC512(accessTokenSecret);
 		refreshTokenAlgorithm = Algorithm.HMAC512(refreshTokenSecret);
 		accessTokenVerifier = JWT.require(accessTokenAlgorithm)
@@ -126,7 +126,7 @@ private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 		try {
 			return Optional.of(accessTokenVerifier.verify(token));
 		}catch (JWTVerificationException e) {
-			log.error("Invalid access token", e);
+			log.error("Invalid access token");
 		}
 		return Optional.empty();
 	}
@@ -135,7 +135,7 @@ private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 		try {
 			return Optional.of(refreshTokenVerifier.verify(token));
 		}catch (JWTVerificationException e) {
-			log.error("Invalid refresh token", e);
+			log.error("Invalid refresh token");
 			//System.out.print(e);
 			
 		}
