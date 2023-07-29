@@ -39,7 +39,8 @@ public class ChambreA1Interceptor implements HandlerInterceptor {
 			}
 			//response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or missing access token");
 			 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED );
-	            response.getWriter().write("{\n"+"error: \"Invalid or missing access token"+"\n}");
+			 response.setContentType("application/json");
+	            response.getWriter().write("{\n"+"\"error\": \"Invalid or missing access token"+"\n}");
             return false; // Bloquez la requête, ne la laissez pas continuer son traitement
         }
 	}

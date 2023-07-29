@@ -26,6 +26,7 @@ public class LogoutTokenInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String authorizationHeader = request.getHeader("Authorization");
 		String accessToken = authorizationHeader.substring(7); //
+		//System.out.println("access-token: "+accessToken);
 
         // Vérifiez si l'en-tête Authorization est présent et commence par "Bearer "
 		if (jwtUtils.validateAccessToken(accessToken) && authorizationHeader != null && authorizationHeader.startsWith("Bearer ") ) {
@@ -36,12 +37,14 @@ public class LogoutTokenInterceptor implements HandlerInterceptor {
 			if( authorizationHeader == null) {
 				log.info("preHandle invoke ... {}:{} "+ request.getRequestURI(), request.getMethod());
 				return true;
-			}
+			}else {
 			//response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or missing access token");
 			//response.getWriter().write("{\"error\":\"Unauthorized\"}");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED );
-            response.getWriter().write("{\n"+"error: \"Invalid or missing access token"+"\n}");
+            response.setContentType("application/json");
+            response.getWriter().write("{\n"+"\"error\": \"Invalid or missing access token"+"\n}");
             return false; // Bloquez la requête, ne la laissez pas continuer son traitement
+			}
         }
 	}
 	

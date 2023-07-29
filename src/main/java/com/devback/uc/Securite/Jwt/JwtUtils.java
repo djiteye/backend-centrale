@@ -81,7 +81,7 @@ static final String issuer = "myApp";
 private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 
 	
-	@Value("#{${com.devback.uc.accessTokenExpirationMinutes} * 10 * 1000}")
+	@Value("#{${com.devback.uc.accessTokenExpirationMinutes} * 10 * 60 * 1000}")
 	private int accessTokenExpirationMs;
 	//@Value("#{${refreshTokenExpirationDays} * 24 * 60 * 60 * 1000}")
 	private long refreshTokenExpirationMs;
@@ -92,7 +92,7 @@ private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 	private JWTVerifier refreshTokenVerifier;
 	
 	public JwtUtils(@Value("${accessTokenSecret}") String accessTokenSecret, @Value("${refreshTokenSecret}") String refreshTokenSecret, @Value("${com.devback.uc.refreshTokenExpirationDays}") int refreshTokenExpirationDays) {
-		refreshTokenExpirationMs = (long) refreshTokenExpirationDays  * 10 * 1000;
+		refreshTokenExpirationMs = (long) refreshTokenExpirationDays * 10 * 60 * 1000;
 		accessTokenAlgorithm = Algorithm.HMAC512(accessTokenSecret);
 		refreshTokenAlgorithm = Algorithm.HMAC512(refreshTokenSecret);
 		accessTokenVerifier = JWT.require(accessTokenAlgorithm)
